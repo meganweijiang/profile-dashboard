@@ -1,0 +1,8 @@
+{
+  "name": "profile-dashboard",
+  "version": "1.0.0",
+  "description": "A guest-book/dashboard of profiles",
+  "main": "index.js",
+  "author": "Megan Weijiang",
+  "license": "MIT"
+}
