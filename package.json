@@ -15,7 +15,8 @@
     "heroku-postbuild": "yarn build"
   },
   "engines": {
-    "node": "6.10.0"
+    "node": "6.10.0",
+    "npm": "4.1.2"
   },
   "dependencies": {
     "axios": "^0.18.0",
