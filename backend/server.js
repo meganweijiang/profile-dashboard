@@ -27,7 +27,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/profiles', (req, res) => {
-  Profile.find((err, profiles) => {
+  Profile.find({}).sort('-createdAt').exec(function(err, profiles) {
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true, data: profiles });
   });

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const ProfileForm = props => (
-  <form onSubmit={props.submitProfile}>
+  <form onSubmit={props.handleSubmit}>
     <input
       type="text"
       name="name"

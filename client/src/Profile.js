@@ -12,7 +12,7 @@ const Profile = props => (
         <ReactMarkdown source={props.children} />
       </div>
       <div className="singleProfileButtons">
-        <span className="time">{moment(props.timestamp).fromNow()}</span>
+        <span className="time">updated {moment(props.timestamp).fromNow()}</span>
         <a onClick={() => { props.handleUpdateProfile(props.id); }}>update</a>
       </div>
     </div>
