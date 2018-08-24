@@ -14,7 +14,7 @@
     "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
   },
   "engines": {
-    "node": "6.10.0",
+    "node": "10.9.0",
     "npm": "4.1.2"
   },
   "dependencies": {
@@ -38,9 +38,5 @@
     "react-dom": "^16.4.2",
     "react-markdown": "^3.4.1",
     "whatwg-fetch": "^2.0.4"
-  },
-  "devDependencies": {
-    "babel-eslint": "^8.2.6",
-    "eslint": "^5.4.0"
   }
 }
