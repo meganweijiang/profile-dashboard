@@ -29,7 +29,7 @@ p {
 .profiles {
   padding: 50px;
   overflow: auto;
-  width: 75%;
+  width: 80%;
   max-width: 1000px;
   min-width: 300px;
   text-align: center;
@@ -58,6 +58,8 @@ p {
 .singleProfileContent p {
   font-size: 16px;
   margin: 0;
+  padding: 10px;
+  max-width: 300px;
 }
 
 .singleProfileButtons {
@@ -81,18 +83,13 @@ p {
 }
 
 .form {
-  width: 70%;
+  width: 100%;
   min-width: 300px;
   max-width: 700px;
   text-align: center;
 }
 
-.form form {
-  display: flex;
-  padding: 15px 0;
-}
-
-.form input {
+.form input, .form textarea {
   padding-left: 10px;
   border: 1px solid #c1c1c1;
   margin-right: 10px;
@@ -102,11 +99,11 @@ p {
 #descinput {
   height: 200px;
   width: 300px;
+  border-radius: 5px;
 }
 
 #submitprofile {
-  padding: 30px;
-  margin: 100px;
+  font-size: 20px;
   border-radius: 5px;
   background-color: #ccf2ff;
   color: #22435D;;
@@ -114,10 +111,6 @@ p {
 
 #hiddentext {
   color: #ccf2ff;
-}
-
-.title {
-  padding: 20px;
 }
 
 #desc {
@@ -128,4 +121,11 @@ p {
 
 #profiletitle {
   text-align: left;
+}
+
+#formcontainer {
+  padding: 20px;
+  border: solid;
+  border-width: 3px;
+  border-radius: 10px;
 }

@@ -46,7 +46,6 @@ class ProfileBox extends Component {
   }
 
   onChangeText = (e) => {
-    const { name, description } = this.state;
     if (e.target.name === 'name')
       this.setState({ name: e.target.value });
     else
