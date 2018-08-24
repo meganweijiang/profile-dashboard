@@ -91,6 +91,7 @@ p {
 
 .form input, .form textarea {
   padding-left: 10px;
+  padding-right: 10px;
   border: 1px solid #c1c1c1;
   margin-right: 10px;
   border-radius: 5px;
@@ -98,7 +99,7 @@ p {
 
 #descinput {
   height: 200px;
-  width: 300px;
+  width: 50%;
   border-radius: 5px;
 }
 
