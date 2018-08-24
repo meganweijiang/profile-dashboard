@@ -4,24 +4,24 @@ import logger from 'morgan';
 import mongoose from 'mongoose';
 import Profile from './models/profile';
 
-// create instances
+// Create instances
 const app = express();
 const router = express.Router();
 
-// user predetermined port or 3001
+// User predetermined port or 3001
 const API_PORT = process.env.API_PORT || 3001;
 
-// connect to DB
+// Connect to DB, my env variables are not working :(
 mongoose.connect("mongodb://megan:password123@ds231242.mlab.com:31242/profile-dashboard");
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-// look for JSON data 
+// Look for JSON data 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(logger('dev'));
 
-// set route path and initialize API
+// Set route path and initialize API
 router.get('/', (req, res) => {
   res.json({ message: 'Hello, World!' });
 });
@@ -35,8 +35,8 @@ router.get('/profiles', (req, res) => {
 
 router.post('/profiles', (req, res) => {
   const profile = new Profile();
-  const { name, description } = req.body;
-  if ( !name || !description ) {
+  const { name, description, pictureURL } = req.body;
+  if ( !name || !description || !pictureURL ) {
     return res.json({
       success: false,
       error: 'You must provide a name, description, and picture'
@@ -44,6 +44,7 @@ router.post('/profiles', (req, res) => {
   }
   profile.name = name;
   profile.description = description;
+  profile.pictureURL = pictureURL;
   profile.save(err => {
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true });
@@ -57,9 +58,10 @@ router.put('/profiles/:profileId', (req, res) => {
   }
   Profile.findById(profileId, (error, profile) => {
     if (error) return res.json({ success: false, error });
-    const { name, description } = req.body;
+    const { name, description, pictureURL } = req.body;
     if (name) profile.name = name;
     if (description) profile.description = description;
+    if (pictureURL) profile.pictureURL = pictureURL;
     profile.save(error => {
       if (error) return res.json({ success: false, error });
       return res.json({ success: true });

@@ -5,9 +5,9 @@ import moment from 'moment';
 
 const Profile = props => (
   <div className="singleProfile">
-    <img alt="user_image" className="userImage" src={`https://picsum.photos/70?random=${props.id}`} />
     <div className="textContent">
       <div className="singleProfileContent">
+        <img src={props.pictureURL} alt="Profile Picture"></img>
         <h3>{props.name}</h3>
         <ReactMarkdown source={props.children} />
       </div>
@@ -22,6 +22,7 @@ const Profile = props => (
 Profile.propTypes = {
   name: PropTypes.string.isRequired,
   children: PropTypes.string.isRequired,
+  pictureURL: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   handleUpdateProfile: PropTypes.func.isRequired,
   timestamp: PropTypes.string.isRequired,

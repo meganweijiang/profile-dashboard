@@ -5,6 +5,10 @@ import 'whatwg-fetch';
 import './ProfileBox.css';
 import axios from 'axios';
 
+// Configurations for Cloudinary API
+var CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/dhcvymchj/upload';
+var CLOUDINARY_UPLOAD_PRESET = 'w0kr9wl9';
+
 class ProfileBox extends Component {
   constructor() {
     super();
@@ -13,20 +17,11 @@ class ProfileBox extends Component {
       error: null,
       name: '',
       description: '',
-      selectedFile: null
+      selectedFile: null,
+      pictureURL: ''
     };
     this.pollInterval = null;
   };
-
-  fileSelectedHandler = event => {
-    this.setState({
-      selectedFile: event.target.files[0]
-    })
-  }
-
-  fileUploadHandler = () => {
-    
-  }
 
   componentDidMount() {
     this.loadProfilesFromServer();
@@ -61,14 +56,15 @@ class ProfileBox extends Component {
     this.setState({
         name: oldProfile.name,
         description: oldProfile.description,
+        pictureURL: oldProfile.pictureURL,
         updateId: id
     });
   }
 
   submitProfile = (e) => {
     e.preventDefault();
-    const { name, description, updateId } = this.state;
-    if (!name || !description) return;
+    const { name, description, updateId, pictureURL } = this.state;
+    if (!name || !description || !pictureURL) return;
     if (updateId) {
       this.submitUpdatedProfile();
     } else {
@@ -77,12 +73,13 @@ class ProfileBox extends Component {
   }
 
   submitNewProfile = () => {
-    const { name, description } = this.state;
+    const { name, description, pictureURL} = this.state;
     const data = [
         ...this.state.data,
         {
           name,
           description,
+          pictureURL,
           _id: Date.now().toString(),
           updatedAt: new Date(),
           createdAt: new Date()
@@ -92,22 +89,53 @@ class ProfileBox extends Component {
     fetch('/api/profiles', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, description }),
+        body: JSON.stringify({ name, description, pictureURL }),
     }).then(res => res.json()).then((res) => {
         if (!res.success) this.setState({ error: res.error.message || res.error });
-        else this.setState({ author: '', text: '', error: null });
+        else this.setState({ name: '', description: '', error: null });
     });
   }
 
   submitUpdatedProfile = () => {
-    const { name, description, updateId } = this.state;
+    const { name, description, pictureURL, updateId } = this.state;
     fetch(`/api/profiles/${updateId}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json', "Accept": "application/json" },
-      body: JSON.stringify({ name, description }),
+      body: JSON.stringify({ name, description, pictureURL }),
     }).then(res => res.json()).then((res) => {
       if (!res.success) this.setState({ error: res.error.message || res.error });
       else this.setState({ name: '', description: '', updateId: null });
+    });
+  }
+
+
+  fileSelectedHandler = event => {
+    this.setState({
+      selectedFile: event.target.files[0]
+    }, function() {
+      console.log(this.state.selectedFile);
+    })
+  }
+
+  fileUploadHandler = () => {
+    let formData = new FormData();
+    formData.append('file', this.state.selectedFile);
+    formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+    axios({
+      url: CLOUDINARY_URL,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/X-WWW-form-urlencoded'
+      },
+      data: formData
+    }).then((res) => {
+      console.log(res.data.url);
+      this.setState({
+        pictureURL: res.data.url
+      })
+
+    }).catch(function(err){
+      console.log(err);
     });
   }
 
@@ -117,9 +145,8 @@ class ProfileBox extends Component {
         <h1>Profile Dashboard</h1>
         <h2>A guestbook of profiles</h2>
         <div className="form">
-          <ProfileForm name={this.state.name} description={this.state.description} handleChangeText={this.onChangeText}
-      handleSubmit={this.submitProfile}/>
-          <input type="file" onChange={this.fileSelectedHandler}/>
+          <ProfileForm name={this.state.name} description={this.state.description} selectedFile={this.state.selectedFile} pictureURL={this.state.pictureURL} handleChangeText={this.onChangeText}
+      handleSubmit={this.submitProfile} fileSelectedHandler={this.fileSelectedHandler} fileUploadHandler={this.fileUploadHandler}/>
         </div>
         <div className="profiles">
           <h2>Profiles:</h2>
