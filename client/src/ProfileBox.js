@@ -21,6 +21,7 @@ class ProfileBox extends Component {
       pictureURL: ''
     };
     this.pollInterval = null;
+    this.myRef = React.createRef();
   };
 
   componentDidMount() {
@@ -45,14 +46,17 @@ class ProfileBox extends Component {
   }
 
   onChangeText = (e) => {
-    const newState = { ...this.state };
-    newState[e.target.name] = e.target.value;
-    this.setState(newState);
+    const { name, description } = this.state;
+    if (e.target.name === 'name')
+      this.setState({ name: e.target.value });
+    else
+      this.setState({ description: e.target.value });
   }
 
   onUpdateProfile = (id) => {
     const oldProfile = this.state.data.find(c => c._id === id);
     if (!oldProfile) return;
+    window.scrollTo(0, this.myRef);
     this.setState({
         name: oldProfile.name,
         description: oldProfile.description,
@@ -75,7 +79,7 @@ class ProfileBox extends Component {
   submitNewProfile = () => {
     const { name, description, pictureURL } = this.state;
     const data = [
-        ...this.state.data,
+        this.state.data,
         {
           name,
           description,
@@ -151,7 +155,7 @@ class ProfileBox extends Component {
       handleSubmit={this.submitProfile} fileSelectedHandler={this.fileSelectedHandler} fileUploadHandler={this.fileUploadHandler} />
         </div>
         <div className="profiles">
-          <div id="profiletitle"><h2>Profiles:</h2></div>
+          <div id="profiletitle"><h2>Profiles</h2></div>
           <ProfileList data={this.state.data} handleUpdateProfile={this.onUpdateProfile}/>
         </div>
         {this.state.error && <p>{this.state.error}</p>}
