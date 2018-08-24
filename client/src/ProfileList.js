@@ -4,9 +4,8 @@ import Profile from './Profile';
 
 const ProfileList = (props) => {
   const profileNodes = props.data.map(profile => (
-    <Profile name={ profile.name } pictureURL={ profile.pictureURL } key={ profile._id } id={ profile._id } timestamp={profile.updatedAt} handleUpdateProfile={props.handleUpdateProfile} >
-      { profile.description }
-      </Profile>
+    <Profile name={ profile.name } pictureURL={ profile.pictureURL } key={ profile._id } id={ profile._id } timestamp={profile.updatedAt} handleUpdateProfile={props.handleUpdateProfile} description={ profile.description }>
+    </Profile>
   ));
   return (
     <div>

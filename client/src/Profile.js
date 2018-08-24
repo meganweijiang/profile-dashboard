@@ -1,15 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ReactMarkdown from 'react-markdown';
 import moment from 'moment';
 
 const Profile = props => (
   <div className="singleProfile">
     <div className="textContent">
       <div className="singleProfileContent">
-        <img src={props.pictureURL} alt="Profile Picture"></img>
+        <img id="profilepic" src={props.pictureURL} alt="Profile Picture"></img>
         <h3>{props.name}</h3>
-        <ReactMarkdown source={props.children} />
+        <p id="desc">{props.description}</p>
       </div>
       <div className="singleProfileButtons">
         <span className="time">updated {moment(props.timestamp).fromNow()}</span>
@@ -21,7 +20,7 @@ const Profile = props => (
 
 Profile.propTypes = {
   name: PropTypes.string.isRequired,
-  children: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
   pictureURL: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   handleUpdateProfile: PropTypes.func.isRequired,

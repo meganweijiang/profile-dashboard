@@ -73,7 +73,7 @@ class ProfileBox extends Component {
   }
 
   submitNewProfile = () => {
-    const { name, description, pictureURL} = this.state;
+    const { name, description, pictureURL } = this.state;
     const data = [
         ...this.state.data,
         {
@@ -92,7 +92,7 @@ class ProfileBox extends Component {
         body: JSON.stringify({ name, description, pictureURL }),
     }).then(res => res.json()).then((res) => {
         if (!res.success) this.setState({ error: res.error.message || res.error });
-        else this.setState({ name: '', description: '', error: null });
+        else this.setState({ name: '', description: '', pictureURL: '', error: null });
     });
   }
 
@@ -104,7 +104,7 @@ class ProfileBox extends Component {
       body: JSON.stringify({ name, description, pictureURL }),
     }).then(res => res.json()).then((res) => {
       if (!res.success) this.setState({ error: res.error.message || res.error });
-      else this.setState({ name: '', description: '', updateId: null });
+      else this.setState({ name: '', description: '', pictureURL: '', updateId: null });
     });
   }
 
@@ -131,7 +131,7 @@ class ProfileBox extends Component {
     }).then((res) => {
       console.log(res.data.url);
       this.setState({
-        pictureURL: res.data.url
+        pictureURL: res.data.url,
       })
 
     }).catch(function(err){
@@ -142,14 +142,16 @@ class ProfileBox extends Component {
   render() {
     return (
       <div className="container">
-        <h1>Profile Dashboard</h1>
-        <h2>A guestbook of profiles</h2>
+        <div className="title">
+          <h1>Profile Dashboard</h1>
+          <h2>A guestbook of profiles</h2>
+        </div>
         <div className="form">
           <ProfileForm name={this.state.name} description={this.state.description} selectedFile={this.state.selectedFile} pictureURL={this.state.pictureURL} handleChangeText={this.onChangeText}
-      handleSubmit={this.submitProfile} fileSelectedHandler={this.fileSelectedHandler} fileUploadHandler={this.fileUploadHandler}/>
+      handleSubmit={this.submitProfile} fileSelectedHandler={this.fileSelectedHandler} fileUploadHandler={this.fileUploadHandler} />
         </div>
         <div className="profiles">
-          <h2>Profiles:</h2>
+          <div id="profiletitle"><h2>Profiles:</h2></div>
           <ProfileList data={this.state.data} handleUpdateProfile={this.onUpdateProfile}/>
         </div>
         {this.state.error && <p>{this.state.error}</p>}

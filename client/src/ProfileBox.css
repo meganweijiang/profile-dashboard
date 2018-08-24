@@ -1,5 +1,5 @@
 .container {
-  background-color: #f1f1f1;
+  background-color: #22435D;
   box-sizing: border-box;
   padding: 25px;
   min-height: 100vh;
@@ -11,47 +11,51 @@
 
 }
 
+body {
+  color: white;
+}
+
+p {
+ color: #22435D;
+}
+
+#profilepic {
+  border-radius: 50%;
+  height: 100px;
+  width: 100px;
+}
+
 .profiles {
+  padding: 50px;
   overflow: auto;
   width: 75%;
-  max-width: 700px;
+  max-width: 1000px;
   min-width: 300px;
+  text-align: center;
 }
-
-.profiles h2 {
-  font-weight: 300;
-}
-
+  
 .singleProfile {
   padding: 10px 20px;
   margin-bottom: 10px;
-  display: flex;
+  display: inline-block;
 }
 
 .singleProfileContent {
   min-width: 100px;
   background-color: #fff;
-  border-radius: 25px;
+  border-radius: 5px;
   padding: 10px;
-  display: inline-flex;
 }
-
-.userImage {
-  height: 35px;
-  margin-right: 10px;
-  border-radius: 50%;
-}
-
 
 .singleProfileContent h3 {
   margin: 0;
   padding-right: 5px;
-  font-size: 12px;
+  font-size: 20px;
   color: #385997;
 }
 
 .singleProfileContent p {
-  font-size: 12px;
+  font-size: 16px;
   margin: 0;
 }
 
@@ -71,7 +75,7 @@
   padding-top: 10px;
   cursor: pointer;
   font-size: 10px;
-  color: #385997;
+  color: white;
   letter-spacing: 0.05em;
 }
 
@@ -79,6 +83,7 @@
   width: 70%;
   min-width: 300px;
   max-width: 700px;
+  text-align: center;
 }
 
 .form form {
@@ -87,26 +92,39 @@
 }
 
 .form input {
-  height: 30px;
   padding-left: 10px;
   border: 1px solid #c1c1c1;
   margin-right: 10px;
-  border-radius: 20px;
-  flex: 3;
-}
-
-.form input:first-child {
-  flex: 1;
-}
-
-.form button {
-  color: #999;
   border-radius: 5px;
-  border: 1px solid #999;
 }
 
-.form button:hover {
-  cursor: pointer;
-  color: #385997;
-  border-color: #385997;
+#descinput {
+  height: 200px;
+  width: 300px;
+}
+
+#submitprofile {
+  padding: 30px;
+  margin: 100px;
+  border-radius: 5px;
+  background-color: #ccf2ff;
+  color: #22435D;;
+}
+
+#hiddentext {
+  color: #ccf2ff;
+}
+
+.title {
+  padding: 50px;
+}
+
+#desc {
+  color: #22435D;
+  size: 16px;
+  display: block;
+}
+
+#profiletitle {
+  text-align: left;
 }
