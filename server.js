@@ -3,7 +3,6 @@ import bodyParser from 'body-parser';
 import logger from 'morgan';
 import mongoose from 'mongoose';
 import Profile from './models/profile';
-import path from 'path';
 
 // Create instances
 const app = express();
@@ -17,7 +16,7 @@ mongoose.connect("mongodb://megan:password123@ds231242.mlab.com:31242/profile-da
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-app.use(express.static(path.join(__dirname, "client", "public")))
+app.use(express.static("client/build"));
 
 // Look for JSON data 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -73,9 +72,5 @@ router.put('/profiles/:profileId', (req, res) => {
 });
 
 app.use('/api', router);
-
-app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "client", "public", "index.html"));
-});
 
 app.listen(API_PORT, () => console.log(`Listening on port ${API_PORT}`));

@@ -10,7 +10,7 @@
     "start:server": "nodemon server.js --exec babel-node --presets es2015,stage-0",
     "start:client": "cd client && yarn start",
     "start:dev": "concurrently \"yarn start:server\" \"yarn start:client\"",
-    "start": "node server.js",
+    "sytart": "node server.js",
     "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
   },
   "engines": {
@@ -38,5 +38,9 @@
     "react-dom": "^16.4.2",
     "react-markdown": "^3.4.1",
     "whatwg-fetch": "^2.0.4"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.2.6",
+    "eslint": "^5.4.0"
   }
 }
