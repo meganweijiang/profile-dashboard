@@ -1,8 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Facebook from './Facebook';
 
 const ProfileForm = props => (
   <div id="formcontainer">
+    <div id="facebook">
+      <Facebook/>
+    </div>
     <form onSubmit={props.handleSubmit}>
       <div ref={this.myRef} id="textinput">
         <h3>Name</h3>
@@ -31,6 +35,7 @@ const ProfileForm = props => (
         <button type="button" disabled={!props.selectedFile} onClick={props.fileUploadHandler}>Upload</button>
         <h3 id="hiddentext" hidden={props.pictureURL}>You must upload a photo to submit.</h3>
         <h3 id="hiddentext" hidden={!props.pictureURL}>Photo is uploaded! Please upload again if you added a new file.</h3>
+        <div id="picpreviewcontainer"><img id="picpreview" src={props.pictureURL}></img></div>
       <button id="submitprofile" type="submit">Submit</button>
       </div>
     </form>

@@ -91,7 +91,6 @@ p {
 
 .form input, .form textarea {
   padding-left: 10px;
-  padding-right: 10px;
   border: 1px solid #c1c1c1;
   margin-right: 10px;
   border-radius: 5px;
@@ -107,7 +106,7 @@ p {
   font-size: 20px;
   border-radius: 5px;
   background-color: #ccf2ff;
-  color: #22435D;;
+  color: #22435D;
 }
 
 #hiddentext {
@@ -129,4 +128,15 @@ p {
   border: solid;
   border-width: 3px;
   border-radius: 10px;
+}
+
+#picpreview {
+  height: 100px;
+  object-fit: cover;  
+  display: inline-block;
+}
+
+#picpreviewcontainer {
+  text-align: center;
+  margin: 20px;
 }

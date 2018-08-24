@@ -4,6 +4,7 @@ import ProfileForm from './ProfileForm';
 import 'whatwg-fetch';
 import './ProfileBox.css';
 import axios from 'axios';
+import Facebook from './Facebook';
 
 // Configurations for Cloudinary API
 var CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/dhcvymchj/upload';
@@ -146,6 +147,7 @@ class ProfileBox extends Component {
     return (
       <div className="container">
         <div className="title">
+
           <h1>Profile Dashboard</h1>
           <h2>A guestbook of profiles</h2>
         </div>
