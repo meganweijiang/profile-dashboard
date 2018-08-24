@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+var mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const ProfilesSchema = new Schema({
@@ -7,4 +7,6 @@ const ProfilesSchema = new Schema({
   pictureURL: String
 }, { timestamps: true });
 
-export default mongoose.model('Profile', ProfilesSchema);
+var Profile = mongoose.model('Profile', ProfilesSchema);
+
+module.exports = Profile;

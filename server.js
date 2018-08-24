@@ -1,8 +1,8 @@
-import express from 'express';
-import bodyParser from 'body-parser';
-import logger from 'morgan';
-import mongoose from 'mongoose';
-import Profile from './models/profile';
+var express = require('express');
+var bodyParser = require('body-parser');
+var logger = require('morgan');
+var mongoose = require('mongoose');
+var Profile = require('./models/profile');
 
 // Create instances
 const app = express();
