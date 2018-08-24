@@ -3,6 +3,7 @@ import ProfileList from './ProfileList';
 import ProfileForm from './ProfileForm';
 import 'whatwg-fetch';
 import './ProfileBox.css';
+import axios from 'axios';
 
 class ProfileBox extends Component {
   constructor() {
@@ -11,10 +12,21 @@ class ProfileBox extends Component {
       data: [],     
       error: null,
       name: '',
-      description: '' 
+      description: '',
+      selectedFile: null
     };
     this.pollInterval = null;
   };
+
+  fileSelectedHandler = event => {
+    this.setState({
+      selectedFile: event.target.files[0]
+    })
+  }
+
+  fileUploadHandler = () => {
+    
+  }
 
   componentDidMount() {
     this.loadProfilesFromServer();
@@ -29,8 +41,7 @@ class ProfileBox extends Component {
   }
 
   loadProfilesFromServer = () => {
-    let options = { method: 'GET' };
-    fetch('/api/profiles', options)
+    fetch('/api/profiles')
       .then(data => data.json())
       .then((res) => {
         if (!res.success) this.setState({ error: res.error });
@@ -108,6 +119,7 @@ class ProfileBox extends Component {
         <div className="form">
           <ProfileForm name={this.state.name} description={this.state.description} handleChangeText={this.onChangeText}
       handleSubmit={this.submitProfile}/>
+          <input type="file" onChange={this.fileSelectedHandler}/>
         </div>
         <div className="profiles">
           <h2>Profiles:</h2>

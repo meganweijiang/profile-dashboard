@@ -16,7 +16,7 @@ const ProfileList = (props) => {
 };
 
 ProfileList.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.shape({
+    data: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string,
     id: PropTypes.string,
     description: PropTypes.string,

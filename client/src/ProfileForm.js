@@ -6,14 +6,14 @@ const ProfileForm = props => (
     <input
       type="text"
       name="name"
-      placeholder="Your name…"
+      placeholder="Your Name"
       value={props.name}
       onChange={props.handleChangeText}
     />
     <input
       type="text"
       name="description"
-      placeholder="Say something..."
+      placeholder="Description"
       value={props.description}
       onChange={props.handleChangeText}
     />

@@ -39,7 +39,7 @@ router.post('/profiles', (req, res) => {
   if ( !name || !description ) {
     return res.json({
       success: false,
-      error: 'You must provide a name, comment, and picture'
+      error: 'You must provide a name, description, and picture'
     });
   }
   profile.name = name;
@@ -55,7 +55,7 @@ router.put('/profiles/:profileId', (req, res) => {
   if (!profileId) {
     return res.json({ success: false, error: 'No profile id provided' });
   }
-  Profile.findById(profileId, (error, comment) => {
+  Profile.findById(profileId, (error, profile) => {
     if (error) return res.json({ success: false, error });
     const { name, description } = req.body;
     if (name) profile.name = name;
