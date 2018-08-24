@@ -6,6 +6,7 @@ const ProfileForm = props => (
     <div id="textinput">
       <h3>Name</h3>
       <input
+        required
         type="text"
         name="name"
         placeholder="Your Name"
@@ -14,6 +15,7 @@ const ProfileForm = props => (
       />
       <h3>Description</h3>
         <input
+          required
           id="descinput"
           type="text"
           name="description"
@@ -24,10 +26,10 @@ const ProfileForm = props => (
     </div>
     <div>
       <h3>Upload a profile picture</h3>
-      <input id="imageupload" type="file" onChange={props.fileSelectedHandler} accept="image/*"/>
+      <input required id="imageupload" type="file" onChange={props.fileSelectedHandler} accept="image/*"/>
       <button type="button" disabled={!props.selectedFile} onClick={props.fileUploadHandler}>Upload</button>
       <h3 id="hiddentext" hidden={!props.pictureURL}>Photo is uploaded! Please upload again if you added a new file.</h3>
-    <button disabled={!props.pictureURL || !props.name || !props.description} id="submitprofile" type="submit">Submit</button>
+    <button id="submitprofile" type="submit">Submit</button>
     </div>
   </form>
 );
