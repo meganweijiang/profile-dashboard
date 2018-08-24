@@ -1,0 +1,72 @@
+import express from 'express';
+import bodyParser from 'body-parser';
+import logger from 'morgan';
+import mongoose from 'mongoose';
+import Profile from './models/profile';
+
+// create instances
+const app = express();
+const router = express.Router();
+
+// user predetermined port or 3001
+const API_PORT = process.env.API_PORT || 3001;
+
+// connect to DB
+mongoose.connect("mongodb://megan:password123@ds231242.mlab.com:31242/profile-dashboard");
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
+// look for JSON data 
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(logger('dev'));
+
+// set route path and initialize API
+router.get('/', (req, res) => {
+  res.json({ message: 'Hello, World!' });
+});
+
+router.get('/profiles', (req, res) => {
+  Profile.find((err, profiles) => {
+    if (err) return res.json({ success: false, error: err });
+    return res.json({ success: true, data: profiles });
+  });
+});
+
+router.post('/profiles', (req, res) => {
+  const profile = new Profile();
+  const { name, description } = req.body;
+  if ( !name || !description ) {
+    return res.json({
+      success: false,
+      error: 'You must provide a name, comment, and picture'
+    });
+  }
+  profile.name = name;
+  profile.description = description;
+  profile.save(err => {
+    if (err) return res.json({ success: false, error: err });
+    return res.json({ success: true });
+  });
+});
+
+router.put('/profiles/:profileId', (req, res) => {
+  const { profileId } = req.params;
+  if (!profileId) {
+    return res.json({ success: false, error: 'No profile id provided' });
+  }
+  Profile.findById(profileId, (error, comment) => {
+    if (error) return res.json({ success: false, error });
+    const { name, description } = req.body;
+    if (name) profile.name = name;
+    if (description) profile.description = description;
+    profile.save(error => {
+      if (error) return res.json({ success: false, error });
+      return res.json({ success: true });
+    });
+  });
+});
+
+app.use('/api', router);
+
+app.listen(API_PORT, () => console.log(`Listening on port ${API_PORT}`));
