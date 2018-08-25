@@ -19,7 +19,8 @@ class ProfileBox extends Component {
       name: '',
       description: '',
       selectedFile: null,
-      pictureURL: ''
+      pictureURL: '',
+      loggedIn: false
     };
     this.pollInterval = null;
     this.myRef = React.createRef();
@@ -61,6 +62,7 @@ class ProfileBox extends Component {
         name: oldProfile.name,
         description: oldProfile.description,
         pictureURL: oldProfile.pictureURL,
+        loggedIn: false,
         updateId: id
     });
   }
@@ -96,7 +98,7 @@ class ProfileBox extends Component {
         body: JSON.stringify({ name, description, pictureURL }),
     }).then(res => res.json()).then((res) => {
         if (!res.success) this.setState({ error: res.error.message || res.error });
-        else this.setState({ name: '', description: '', pictureURL: '', error: null });
+        else this.setState({ name: '', description: '', pictureURL: '', loggedIn: false, error: null });
     });
   }
 
@@ -108,10 +110,9 @@ class ProfileBox extends Component {
       body: JSON.stringify({ name, description, pictureURL }),
     }).then(res => res.json()).then((res) => {
       if (!res.success) this.setState({ error: res.error.message || res.error });
-      else this.setState({ name: '', description: '', pictureURL: '', updateId: null });
+      else this.setState({ name: '', description: '', pictureURL: '', loggedIn: false, updateId: null });
     });
   }
-
 
   fileSelectedHandler = event => {
     this.setState({
@@ -143,15 +144,25 @@ class ProfileBox extends Component {
     });
   }
 
+  facebookLoginHandler = response => {
+    this.setState({
+      loggedIn: true,
+      name: response.name,
+      pictureURL: response.picture.data.url
+    });
+  }
+
   render() {
     return (
       <div className="container">
         <div className="title">
-
           <h1>Profile Dashboard</h1>
           <h2>A guestbook of profiles</h2>
         </div>
         <div className="form">
+          <div id="facebook">
+            {this.state.loggedIn ? <h3>You are logged in to Facebook.</h3> : <Facebook handleFacebookLogin={this.facebookLoginHandler} loggedIn={this.state.loggedIn}/>}
+          </div>
           <ProfileForm name={this.state.name} description={this.state.description} selectedFile={this.state.selectedFile} pictureURL={this.state.pictureURL} handleChangeText={this.onChangeText}
       handleSubmit={this.submitProfile} fileSelectedHandler={this.fileSelectedHandler} fileUploadHandler={this.fileUploadHandler} />
         </div>

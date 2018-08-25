@@ -1,12 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Facebook from './Facebook';
 
 const ProfileForm = props => (
   <div id="formcontainer">
-    <div id="facebook">
-      <Facebook/>
-    </div>
     <form onSubmit={props.handleSubmit}>
       <div ref={this.myRef} id="textinput">
         <h3>Name</h3>

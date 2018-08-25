@@ -1,43 +1,29 @@
 import React, { Component } from 'react';
 import FacebookLogin from 'react-facebook-login';
+import PropTypes from 'prop-types';
 
-export default class Facebook extends Component {
-	state = {
-		isLoggedIn: false,
-		name: '',
-		picture: ''
-	}
+const Facebook = props => (
+	<div>
+		<FacebookLogin
+	    appId="2160983967308548"
+	    autoLoad={true}
+	    fields="name,email,picture"
+	    textButton="Get name and picture from Facebook"
+	    callback={props.handleFacebookLogin} />
+    </div>
+);
 
-	responseFacebook = response => {
-		this.setState({
-			isLoggedIn: true,
-			name: response.name,
-			picture: response.picture.data.url
-		});
-	}
+Facebook.propTypes = {
+  name: PropTypes.string.isRequired,
+  pictureURL: PropTypes.string.isRequired,
+  loggedIn: PropTypes.string.isRequired,
+  handleFacebookLogin: PropTypes.func.isRequired
+};
 
-	componentClicked = () => console.log("clicked");
+Facebook.defaultProps = {
+  name: '',
+  pictureURL: '',
+  loggedIn: false
+};
 
-	render() {
-		let fbContent;
-
-		if (this.state.isLoggedIn) {
-			fbContent = null;
-		}
-		else {
-			fbContent = (<FacebookLogin
-		    appId="2160983967308548"
-		    autoLoad={true}
-		    fields="name,email,picture"
-		    onClick={this.componentClicked}
-		    callback={this.responseFacebook} />);
-		}
-
-		return (
-			<div>
-				{ fbContent }
-			</div>
-		)
-	}
-
-}
+export default Facebook;
