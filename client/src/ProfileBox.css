@@ -19,6 +19,14 @@ p {
  color: #22435D;
 }
 
+button {
+  border: none;
+  text-decoration: none;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  border-radius: 5px;
+}
+
 #profilepic {
   border-radius: 50%;
   height: 100px;
@@ -103,10 +111,13 @@ p {
 }
 
 #submitprofile {
-  font-size: 20px;
-  border-radius: 5px;
+  font-size: 25px;
   background-color: #ccf2ff;
   color: #22435D;
+}
+
+#submitprofile:hover {
+  background-color: white;
 }
 
 #hiddentext {

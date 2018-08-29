@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import FacebookLogin from 'react-facebook-login';
 import PropTypes from 'prop-types';
 
@@ -16,7 +16,7 @@ const Facebook = props => (
 Facebook.propTypes = {
   name: PropTypes.string.isRequired,
   pictureURL: PropTypes.string.isRequired,
-  loggedIn: PropTypes.string.isRequired,
+  loggedIn: PropTypes.bool.isRequired,
   handleFacebookLogin: PropTypes.func.isRequired
 };
 

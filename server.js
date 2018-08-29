@@ -11,8 +11,8 @@ const router = express.Router();
 // User predetermined port or 3001
 const API_PORT = process.env.PORT || 3001;
 
-// Connect to DB, my env variables are not working :(
-mongoose.connect("mongodb://megan:password123@ds231242.mlab.com:31242/profile-dashboard");
+// Connect to DB
+mongoose.connect(process.env.MONGO_URI);
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 

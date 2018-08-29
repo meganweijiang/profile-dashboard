@@ -7,8 +7,8 @@ import axios from 'axios';
 import Facebook from './Facebook';
 
 // Configurations for Cloudinary API
-var CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/dhcvymchj/upload';
-var CLOUDINARY_UPLOAD_PRESET = 'w0kr9wl9';
+var CLOUDINARY_URL = process.env.CLOUDINARY_URL;
+var CLOUDINARY_UPLOAD_PRESET = process.env.CLOUDINARY_UPLOAD_PRESET;
 
 class ProfileBox extends Component {
   constructor() {
@@ -81,7 +81,7 @@ class ProfileBox extends Component {
   submitNewProfile = () => {
     const { name, description, pictureURL } = this.state;
     const data = [
-        this.state.data,
+        ...this.state.data,
         {
           name,
           description,
