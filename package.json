@@ -10,8 +10,8 @@
     "start:server": "nodemon server.js --exec babel-node --presets es2016,stage-0",
     "start:client": "cd client && yarn start",
     "start:dev": "concurrently \"yarn start:server\" \"yarn start:client\"",
-    "sytart": "node server.js",
-    "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
+    "start": "node server.js",
+    "heroku-postbuild": "cd client && yarn install && yarn build"
   },
   "dependencies": {
     "axios": "^0.18.0",
