@@ -22,7 +22,7 @@ class ProfileBox extends Component {
       loggedIn: false
     };
     this.port = process.env.PORT || 3000;
-    this.endpoint = `http://localhost:${port}`;
+    this.endpoint = `http://localhost:${this.port}`;
     this.myRef = React.createRef();
     this.socket = socketIOClient(this.state.endpoint);
   };
