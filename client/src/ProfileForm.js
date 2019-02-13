@@ -29,10 +29,9 @@ const ProfileForm = props => (
         <h3>Upload a profile picture</h3>
         <input id="imageupload" type="file" onChange={props.fileSelectedHandler} accept="image/*"/>
         <button type="button" disabled={!props.selectedFile} onClick={props.fileUploadHandler}>Upload</button>
-        <h3 id="hiddentext" hidden={props.pictureURL}>You must upload a photo to submit.</h3>
         <h3 id="hiddentext" hidden={!props.pictureURL}>Photo is uploaded! Please upload again if you added a new file.</h3>
-        <div id="picpreviewcontainer"><img id="picpreview" src={props.pictureURL}></img></div>
-      <button id="submitprofile" type="submit">Submit</button>
+        <div id="picpreviewcontainer"><img id="picpreview" src={props.pictureURL} alt=""></img></div>
+      <button id="submitprofile" disabled={!props.name || !props.description || !props.pictureURL} type="submit">Submit</button>
       </div>
     </form>
   </div>

@@ -114,10 +114,16 @@ button {
   font-size: 25px;
   background-color: #ccf2ff;
   color: #22435D;
+  cursor: pointer;
 }
 
 #submitprofile:hover {
   background-color: white;
+}
+
+#submitprofile:disabled {
+  background-color: #ececec;
+  cursor: unset;
 }
 
 #hiddentext {

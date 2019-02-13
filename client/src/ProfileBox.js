@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import ProfileList from './ProfileList';
 import ProfileForm from './ProfileForm';
-import 'whatwg-fetch';
-import './ProfileBox.css';
-import axios from 'axios';
 import Facebook from './Facebook';
+import socketIOClient from "socket.io-client";
+import './ProfileBox.css';
 
 // Configurations for Cloudinary API
 var CLOUDINARY_URL = process.env.CLOUDINARY_URL;
-var CLOUDINARY_UPLOAD_PRESET = process.env.CLOUDINARY_UPLOAD_PRESET;
+var CLOUDINARY_UPLOAD_PRESET = process.env.CLOUDINARY_PRESET;
 
 class ProfileBox extends Component {
   constructor() {
@@ -22,29 +21,18 @@ class ProfileBox extends Component {
       pictureURL: '',
       loggedIn: false
     };
-    this.pollInterval = null;
+    this.port = process.env.PORT || 3000;
+    this.endpoint = `http://localhost:${port}`;
     this.myRef = React.createRef();
+    this.socket = socketIOClient(this.state.endpoint);
   };
 
   componentDidMount() {
-    this.loadProfilesFromServer();
-    if (!this.pollInterval) {
-      this.pollInterval = setInterval(this.loadProfilesFromServer, 2000);
-    }
+    this.socket.on("get_data", (data) => this.setState({ data }));
   }
 
   componentWillUnmount() {
-    if (this.pollInterval) clearInterval(this.pollInterval);
-    this.pollInterval = null;
-  }
-
-  loadProfilesFromServer = () => {
-    fetch('/api/profiles')
-      .then(data => data.json())
-      .then((res) => {
-        if (!res.success) this.setState({ error: res.error });
-        else this.setState({ data: res.data });
-      });
+    this.socket.off("get_data");
   }
 
   onChangeText = (e) => {
@@ -96,10 +84,14 @@ class ProfileBox extends Component {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, description, pictureURL }),
-    }).then(res => res.json()).then((res) => {
-        if (!res.success) this.setState({ error: res.error.message || res.error });
-        else this.setState({ name: '', description: '', pictureURL: '', loggedIn: false, error: null });
-    });
+    })
+    .then(res => res.json()).then((res) => {
+      if (!res.success) this.setState({ error: res.error.message || res.error });
+      else this.setState({ name: '', description: '', pictureURL: '', loggedIn: false, error: null });
+    })
+    .then(() => {
+      this.socket.emit('data_changed', 1000);
+    })
   }
 
   submitUpdatedProfile = () => {
@@ -108,10 +100,14 @@ class ProfileBox extends Component {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json', "Accept": "application/json" },
       body: JSON.stringify({ name, description, pictureURL }),
-    }).then(res => res.json()).then((res) => {
+    })
+    .then(res => res.json()).then((res) => {
       if (!res.success) this.setState({ error: res.error.message || res.error });
       else this.setState({ name: '', description: '', pictureURL: '', loggedIn: false, updateId: null });
-    });
+    })
+    .then(() => {
+      this.socket.emit('data_changed', 1000);
+    })
   }
 
   fileSelectedHandler = event => {
@@ -126,20 +122,21 @@ class ProfileBox extends Component {
     let formData = new FormData();
     formData.append('file', this.state.selectedFile);
     formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
-    axios({
+    fetch({
       url: CLOUDINARY_URL,
       method: 'POST',
       headers: {
         'Content-Type': 'application/X-WWW-form-urlencoded'
       },
       data: formData
-    }).then((res) => {
+    })
+    .then((res) => {
       console.log(res.data.url);
       this.setState({
         pictureURL: res.data.url,
       })
-
-    }).catch(function(err){
+    })
+    .catch(function(err){
       console.log(err);
     });
   }

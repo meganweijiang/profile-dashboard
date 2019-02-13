@@ -6,7 +6,7 @@ const Profile = props => (
   <div className="singleProfile">
     <div className="textContent">
       <div className="singleProfileContent">
-        <img id="profilepic" src={props.pictureURL} alt="Profile Picture"></img>
+        <img id="profilepic" src={props.pictureURL} alt=""></img>
         <h3>{props.name}</h3>
         <p id="desc">{props.description}</p>
       </div>
