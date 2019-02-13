@@ -6,12 +6,11 @@
   "author": "Megan Weijiang",
   "license": "MIT",
   "scripts": {
-    "build": "babel . --ignore node_modules,build --out-dir build",
-    "start:server": "nodemon server.js",
-    "start:client": "cd client && yarn start",
-    "start:dev": "concurrently \"yarn start:server\" \"yarn start:client\"",
+    "client": "cd client && yarn start",
+    "server": "nodemon server.js",
+    "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
     "start": "node server.js",
-    "heroku-postbuild": "cd client && yarn install && yarn build"
+    "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
